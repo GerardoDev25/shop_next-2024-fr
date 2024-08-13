@@ -3,8 +3,10 @@
     "dev"
   ],
   "cSpell.words": [
+    "clsx",
     "imgs",
     "starman",
-    "Teslo"
+    "Teslo",
+    "zustand"
   ]
 }
