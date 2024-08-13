@@ -1,5 +1,8 @@
 {
   "conventionalCommits.scopes": [
     "dev"
+  ],
+  "cSpell.words": [
+    "Teslo"
   ]
 }
