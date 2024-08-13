@@ -1,4 +1,4 @@
-import { TopMenu } from '@/components/ui/top-menu';
+import { TopMenu } from '@/components/ui/';
 
 interface Props {
   children: React.ReactNode;
