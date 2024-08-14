@@ -1,1 +1,2 @@
-export * from './ProductSliceShop';
+export * from './ProductSliceShow';
+export * from './ProductMobileSliceShow';

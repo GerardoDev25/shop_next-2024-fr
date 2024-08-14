@@ -3,7 +3,8 @@ import { notFound } from 'next/navigation';
 import { initialData } from '@/seed/seed';
 import { titleFont } from '@/config';
 import {
-  ProductSliceShop,
+  ProductMobileSliceShow,
+  ProductSliceShow,
   QuantitySelector,
   SizeSelector,
 } from '@/components/product';
@@ -25,7 +26,18 @@ export default function ProductPage({ params }: Props) {
     <div className='mt-5 mb-20 grid md:grid-cols-3 gap-3'>
       {/* SlideShow */}
       <div className='col-span-1 md:col-span-2 '>
-        <ProductSliceShop images={product.images} title={product.title} />
+        {/* desktop slideshow */}
+        <ProductSliceShow
+          images={product.images}
+          title={product.title}
+          className='hidden md:block'
+        />
+        {/* movil slideshow */}
+        <ProductMobileSliceShow
+          images={product.images}
+          title={product.title}
+          className='block md:hidden'
+        />
       </div>
 
       {/* Details */}

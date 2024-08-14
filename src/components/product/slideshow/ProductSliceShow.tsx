@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Swiper as SwiperObject } from 'swiper';
 import { Autoplay, FreeMode, Navigation, Thumbs } from 'swiper/modules';
@@ -10,8 +11,6 @@ import 'swiper/css/free-mode';
 import 'swiper/css/navigation';
 import 'swiper/css/thumbs';
 import './style.css';
-import React from 'react';
-import Image from 'next/image';
 
 interface Props {
   images: string[];
@@ -19,7 +18,7 @@ interface Props {
   className?: string;
 }
 
-export const ProductSliceShop = ({ images, title, className }: Props) => {
+export const ProductSliceShow = ({ images, title, className }: Props) => {
   const [thumbsSwiper, setThumbsSwiper] = useState<SwiperObject>();
   return (
     <div className={className}>
@@ -37,6 +36,7 @@ export const ProductSliceShop = ({ images, title, className }: Props) => {
         }}
         thumbs={{ swiper: thumbsSwiper }}
         modules={[FreeMode, Navigation, Thumbs, Autoplay]}
+        className='mySwiper2'
       >
         {images.map((image) => (
           <SwiperSlide key={image}>
