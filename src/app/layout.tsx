@@ -3,8 +3,6 @@ import type { Metadata } from 'next';
 import './globals.css';
 import { inter } from '@/config/fonts';
 
-
-
 export const metadata: Metadata = {
   title: 'Shop Store',
   description: 'e-commerce store next',
