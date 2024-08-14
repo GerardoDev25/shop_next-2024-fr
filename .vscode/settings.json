@@ -1,6 +1,7 @@
 {
   "conventionalCommits.scopes": [
-    "dev"
+    "dev",
+    "ui"
   ],
   "cSpell.words": [
     "clsx",
