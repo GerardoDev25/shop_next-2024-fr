@@ -1,4 +1,4 @@
-import { ProductGrid } from '@/components/products/product';
+import { ProductGrid } from '@/components/products';
 import { Title } from '@/components/ui';
 import { Category } from '@/interfaces';
 import { initialData } from '@/seed/seed';

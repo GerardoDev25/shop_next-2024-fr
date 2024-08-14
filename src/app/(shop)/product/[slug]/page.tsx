@@ -1,8 +1,51 @@
+import { notFound } from 'next/navigation';
 
-export default function ProductPage() {
+import { initialData } from '@/seed/seed';
+import { titleFont } from '@/config';
+import { SizeSelector } from '@/components/product';
+
+interface Props {
+  params: { slug: string };
+}
+
+export default function ProductPage({ params }: Props) {
+  const { slug } = params;
+
+  const product = initialData.products.find((product) => product.slug === slug);
+
+  if (!product) {
+    notFound();
+  }
+
   return (
-    <div>
-      <h1>Product Page</h1>
+    <div className='mt-5 mb-20 grid md:grid-cols-3 gap-3'>
+      {/* SlideShow */}
+      <div className='col-span-1 md:col-span-2 '>
+        <h1>hello world</h1>
+      </div>
+
+      {/* Details */}
+      <div className='col-span-1 px-5 '>
+        <h1 className={`${titleFont.className} antialiased font-bold text-xl`}>
+          {product.title}
+        </h1>
+        <p className='text-lg mb-5'>${product.price}</p>
+        {/* todo size selector */}
+
+        <SizeSelector
+          availableSizes={product.sizes}
+          selectedSize={product.sizes[0]}
+        />
+
+        {/* todo quantity selector */}
+
+        {/* button */}
+        <button className='btn-primary my-5'>Add to Cart</button>
+
+        {/* Description */}
+        <h3 className='font-bold text-sm'>Description</h3>
+        <p className='font-light'>{product.description}</p>
+      </div>
     </div>
   );
 }
