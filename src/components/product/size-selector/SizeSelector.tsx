@@ -15,7 +15,7 @@ export const SizeSelector = ({ availableSizes, selectedSize }: Props) => {
           <button
             key={size}
             className={clsx('mx-2 p-1 hover:underline text-lg', {
-              undefined: size === selectedSize,
+              underline: size === selectedSize,
             })}
           >
             {size}
