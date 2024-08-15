@@ -1,4 +1,4 @@
-import { Sidebar, TopMenu } from '@/components/ui/';
+import { Footer, Sidebar, TopMenu } from '@/components/ui/';
 
 interface Props {
   children: React.ReactNode;
@@ -10,8 +10,8 @@ export default function ShopLayout({ children }: Props) {
       <TopMenu />
       <Sidebar />
 
-
       <div className='px-0 sm:px-10'>{children}</div>
+      <Footer />
     </main>
   );
 }
