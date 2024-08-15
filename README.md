@@ -18,8 +18,9 @@ make sure you have these programs installed in your machine
 3. fill all the field 
 4. install dependencies ```yarn install```
 5. run database ```docker compose up -d```
-6. run de project ```yarn dev```
-7. go to link __http://localhost:3000__
+6. run db migrations ```yarn prisma migrate dev```
+7. run de project ```yarn dev```
+8. go to link __http://localhost:3000__
 
 
 ## run the project (production)
