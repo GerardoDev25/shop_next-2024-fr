@@ -41,10 +41,10 @@ export default function CartPage() {
                   alt={product.title}
                   style={{
                     // width: '100px',
-                    // height: '100px',
+                    height: '100px',
                     objectFit: 'contain',
                     maxWidth: '100%',
-                    height: 'auto',
+                    // height: 'auto',
                   }}
                   className='mr-5 rounded'
                 />
