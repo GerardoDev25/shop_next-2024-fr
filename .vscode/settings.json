@@ -1,12 +1,14 @@
 {
   "conventionalCommits.scopes": [
     "dev",
-    "ui"
+    "ui",
+    "doc"
   ],
   "cSpell.words": [
     "clsx",
     "Cybertruck",
     "imgs",
+    "nextjs",
     "starman",
     "swiper",
     "Teslo",
