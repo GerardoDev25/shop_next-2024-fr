@@ -7,9 +7,9 @@ import Link from 'next/link';
 import { redirect } from 'next/navigation';
 
 const productsInCart: Product[] = [
-  // initialData.products[0],
-  // initialData.products[1],
-  // initialData.products[2],
+  initialData.products[0],
+  initialData.products[1],
+  initialData.products[2],
 ];
 
 export default function CartPage() {
@@ -60,7 +60,7 @@ export default function CartPage() {
 
           {/* checkout */}
 
-          <div className='bg-white rounded-xl shadow-xl p-7'>
+          <div className='bg-white rounded-xl shadow-xl p-7 h-fit'>
             <h2 className='text-2xl mb-2'>Order Summary</h2>
             <div className='grid grid-cols-2'>
               <span>No. Products</span>
