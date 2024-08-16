@@ -12,8 +12,6 @@ interface PaginationOptions {
 export const getPaginationWithProducts = async (props: PaginationOptions) => {
   let { page = 1, take = 12, gender } = props;
 
-  console.log(gender);
-
   if (isNaN(+page)) page = 1;
   if (page < 1) page = 1;
 
