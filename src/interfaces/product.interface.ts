@@ -1,5 +1,5 @@
 export interface Product {
-  // todo id
+  id: string;
   description: string;
   images: string[];
   inStock: number;
@@ -8,7 +8,8 @@ export interface Product {
   slug: string;
   tags: string[];
   title: string;
-  type: ValidTypes;
+  // todo fix this later
+  // type: ValidTypes;
   gender: Category;
 }
 export type Size = 'XS' | 'S' | 'M' | 'L' | 'XL' | 'XXL' | 'XXXL';

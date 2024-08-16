@@ -1,7 +1,6 @@
 'use server';
 
 import prisma from '../../lib/prisma';
-import { Product } from '../../interfaces/product.interface';
 
 export const getPaginationWithProducts = async () => {
   try {
@@ -10,6 +9,16 @@ export const getPaginationWithProducts = async () => {
         ProductImage: { take: 2, select: { url: true } },
       },
     });
-    console.log(products);
-  } catch (error) {}
+
+    return {
+      currentPage: 1,
+      totalPage: 1,
+      products: products.map((product) => ({
+        ...product,
+        images: product.ProductImage.map((image) => image.url),
+      })),
+    };
+  } catch (error) {
+    throw new Error('Cannot load the products');
+  }
 };
