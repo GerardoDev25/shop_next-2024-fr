@@ -26,19 +26,19 @@ export const TopMenu = () => {
       <div className='hidden sm:block'>
         <Link
           className='m-2 p-2 rounded-md transition-all'
-          href={'/category/men'}
+          href={'/gender/men'}
         >
           Men
         </Link>
         <Link
           className='m-2 p-2 rounded-md transition-all'
-          href={'/category/women'}
+          href={'/gender/women'}
         >
           Women
         </Link>
         <Link
           className='m-2 p-2 rounded-md transition-all'
-          href={'/category/kid'}
+          href={'/gender/kid'}
         >
           Kids
         </Link>
