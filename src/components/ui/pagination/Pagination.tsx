@@ -1,5 +1,6 @@
 'use client';
 
+import { generatePagination } from '@/utils';
 import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { IoChevronBackOutline, IoChevronForwardOutline } from 'react-icons/io5';
@@ -11,7 +12,7 @@ interface Props {
 export const Pagination = ({ totalPages }: Props) => {
   const pathName = usePathname();
   const searchParams = useSearchParams();
-
+  // generatePagination
   const currentPage = Number(searchParams.get('page')) ?? 1;
 
   const createPageUrl = (pageNumber: number | string) => {
