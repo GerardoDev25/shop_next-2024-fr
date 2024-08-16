@@ -1,7 +1,10 @@
+export const revalidate = 60
+
+import { redirect } from 'next/navigation';
+
 import { getPaginationWithProducts } from '@/actions/products';
 import { ProductGrid } from '@/components/products';
 import { Pagination, Title } from '@/components/ui/';
-import { redirect } from 'next/navigation';
 
 interface Props {
   searchParams: { page?: string };
