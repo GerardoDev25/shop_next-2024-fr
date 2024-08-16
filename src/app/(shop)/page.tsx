@@ -1,11 +1,18 @@
 import { getPaginationWithProducts } from '@/actions/products';
 import { ProductGrid } from '@/components/products';
 import { Title } from '@/components/ui/';
+import { redirect } from 'next/navigation';
 
-export default async function Home() {
-  const { products } = await getPaginationWithProducts();
+interface Props {
+  searchParams: { page?: string };
+}
 
-  console.log(products);
+export default async function Home({ searchParams }: Props) {
+  const page = searchParams.page ? parseInt(searchParams.page) : 1;
+
+  const { products } = await getPaginationWithProducts({ page });
+
+  if (!products.length) redirect('/');
 
   return (
     <>
