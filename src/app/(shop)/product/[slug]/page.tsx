@@ -8,6 +8,7 @@ import {
   ProductSliceShow,
   QuantitySelector,
   SizeSelector,
+  StockLabel,
 } from '@/components/product';
 import { getProductBySlug } from '@/actions/products';
 
@@ -19,8 +20,6 @@ export default async function ProductPage({ params }: Props) {
   const { slug } = params;
 
   const product = await getProductBySlug(slug);
-
-  console.log(product);
 
   if (!product) {
     notFound();
@@ -46,6 +45,7 @@ export default async function ProductPage({ params }: Props) {
 
       {/* Details */}
       <div className='col-span-1 px-5 '>
+        <StockLabel slug={product.slug} />
         <h1 className={`${titleFont.className} antialiased font-bold text-xl`}>
           {product.title}
         </h1>
