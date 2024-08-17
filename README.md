@@ -15,12 +15,13 @@ make sure you have these programs installed in your machine
 
 1. Clone the repo
 2. copy the file __.env.template__ and rename it as __.env__
-3. fill all the field 
+3. fill all the field in the __.env__ file
 4. install dependencies ```yarn install```
 5. run database ```docker compose up -d```
 6. run db migrations ```yarn prisma migrate dev```
-7. run de project ```yarn dev```
-8. go to link __http://localhost:3000__
+7. execute seed ```yarn seed```
+8. run de project ```yarn dev```
+9. go to link __http://localhost:3000__
 
 
 ## run the project (production)
