@@ -1,8 +1,8 @@
-export const revalidate = 60
+export const revalidate = 60;
 
 import { redirect } from 'next/navigation';
 
-import { getPaginationWithProducts } from '@/actions/products';
+import { getPaginationWithProducts } from '@/actions/products/';
 import { ProductGrid } from '@/components/products';
 import { Pagination, Title } from '@/components/ui/';
 
@@ -13,9 +13,7 @@ interface Props {
 export default async function Home({ searchParams }: Props) {
   const page = searchParams.page ? parseInt(searchParams.page) : 1;
 
-  const { products, currentPage, totalPages } = await getPaginationWithProducts(
-    { page }
-  );
+  const { products, totalPages } = await getPaginationWithProducts({ page });
 
   if (!products.length) redirect('/');
 
