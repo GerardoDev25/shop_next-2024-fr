@@ -11,10 +11,12 @@ interface Props {
 export const AddToCart = ({ product }: Props) => {
   const [size, setSize] = useState<Size | undefined>();
   const [quantity, setQuantity] = useState(1);
+  const [posted, setPosted] = useState(false);
 
   const addToCart = () => {
     if (!size) {
-      return alert('Please select a size');
+      setPosted(true);
+      return;
     }
     console.log({ size, quantity });
   };
@@ -22,6 +24,10 @@ export const AddToCart = ({ product }: Props) => {
   return (
     <>
       {/* todo size selector */}
+
+      {posted && !size && (
+        <span className='mt-2 text-red-500 fade-in'>Should select a Size</span>
+      )}
 
       <SizeSelector
         availableSizes={product.sizes}
