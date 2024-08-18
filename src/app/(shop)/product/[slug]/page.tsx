@@ -7,11 +7,10 @@ import { titleFont } from '@/config';
 import {
   ProductMobileSliceShow,
   ProductSliceShow,
-  QuantitySelector,
-  SizeSelector,
   StockLabel,
 } from '@/components/product';
 import { getProductBySlug } from '@/actions/products';
+import { AddToCart } from './ui/AddToCart';
 
 interface Props {
   params: { slug: string };
@@ -73,19 +72,10 @@ export default async function ProductPage({ params }: Props) {
           {product.title}
         </h1>
         <p className='text-lg mb-5'>${product.price}</p>
-        {/* todo size selector */}
 
-        <SizeSelector
-          availableSizes={product.sizes}
-          selectedSize={product.sizes[0]}
-        />
+        {/* Add to cart */}
 
-        {/* todo quantity selector */}
-
-        <QuantitySelector quantity={2} />
-
-        {/* button */}
-        <button className='btn-primary my-5'>Add to Cart</button>
+        <AddToCart product={product} />
 
         {/* Description */}
         <h3 className='font-bold text-sm'>Description</h3>
