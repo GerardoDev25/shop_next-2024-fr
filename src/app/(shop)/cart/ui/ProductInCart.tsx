@@ -8,9 +8,10 @@ import { useCartStore } from '@/store/cart';
 import Link from 'next/link';
 
 export const ProductInCart = () => {
-  const productsInCart = useCartStore((s) => s.cart);
-
   const [loaded, setLoaded] = useState(false);
+
+  const productsInCart = useCartStore((s) => s.cart);
+  const updateProductQuantity = useCartStore((s) => s.updateProductQuantity);
 
   useEffect(() => {
     setLoaded(true);
@@ -40,7 +41,12 @@ export const ProductInCart = () => {
               {product.size} - {product.title}
             </Link>
             <p>${product.price}</p>
-            <QuantitySelector quantity={3} onQuantityChanged={console.log} />
+            <QuantitySelector
+              quantity={product.quantity}
+              onQuantityChanged={(quantity) =>
+                updateProductQuantity(product, quantity)
+              }
+            />
             <button className='underline mt-3'>Remove</button>
           </div>
         </div>
