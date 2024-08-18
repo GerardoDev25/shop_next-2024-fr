@@ -1,10 +1,11 @@
 'use client';
 
+import { useEffect, useState } from 'react';
+
 import { titleFont } from '@/config';
 import { useCartStore } from '@/store/cart';
 import { useIuStore } from '@/store/ui';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
 import { IoSearchOutline, IoCartOutline } from 'react-icons/io5';
 
 export const TopMenu = () => {

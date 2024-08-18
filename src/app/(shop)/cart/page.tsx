@@ -1,16 +1,8 @@
-import { QuantitySelector } from '@/components/product';
-import { Title } from '@/components/ui';
-import { Product } from '@/interfaces';
-import { initialData } from '@/seed/seed';
-import Image from 'next/image';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 
-const productsInCart: Product[] = [
-  // initialData.products[0],
-  // initialData.products[1],
-  // initialData.products[2],
-];
+import { Title } from '@/components/ui';
+import { ProductInCart } from './ui';
 
 export default function CartPage() {
   // if (productsInCart.length === 0) {
@@ -32,30 +24,7 @@ export default function CartPage() {
 
             {/* items  */}
 
-            {productsInCart.map((product) => (
-              <div key={product.slug} className='flex mb-5'>
-                <Image
-                  src={`/products/${product.images[0]}`}
-                  width={100}
-                  height={100}
-                  alt={product.title}
-                  style={{
-                    // width: '100px',
-                    height: '100px',
-                    objectFit: 'contain',
-                    maxWidth: '100%',
-                    // height: 'auto',
-                  }}
-                  className='mr-5 rounded'
-                />
-                <div>
-                  <p>{product.title}</p>
-                  <p>${product.price}</p>
-                  <QuantitySelector quantity={3} />
-                  <button className='underline mt-3'>Remove</button>
-                </div>
-              </div>
-            ))}
+            <ProductInCart />
           </div>
 
           {/* checkout */}
