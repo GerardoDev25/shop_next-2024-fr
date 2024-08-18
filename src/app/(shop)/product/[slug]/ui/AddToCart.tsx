@@ -14,11 +14,10 @@ export const AddToCart = ({ product }: Props) => {
   const [posted, setPosted] = useState(false);
 
   const addToCart = () => {
-    if (!size) {
-      setPosted(true);
-      return;
-    }
+    setPosted(true);
+    if (!size) return;
     console.log({ size, quantity });
+    
   };
 
   return (
