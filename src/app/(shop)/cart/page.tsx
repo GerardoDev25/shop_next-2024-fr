@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { redirect } from 'next/navigation';
 
 import { Title } from '@/components/ui';
-import { ProductInCart } from './ui';
+import { OrderSummary, ProductInCart } from './ui';
 
 export default function CartPage() {
   // if (productsInCart.length === 0) {
@@ -31,19 +31,9 @@ export default function CartPage() {
 
           <div className='bg-white rounded-xl shadow-xl p-7 h-fit'>
             <h2 className='text-2xl mb-2'>Order Summary</h2>
-            <div className='grid grid-cols-2'>
-              <span>No. Products</span>
-              <span className='text-right'>3 items</span>
 
-              <span>Subtotal</span>
-              <span className='text-right'>$100</span>
+            <OrderSummary />
 
-              <span>Tax(15%)</span>
-              <span className='text-right'>100</span>
-
-              <span className='mt-5 text-2xl'>Total</span>
-              <span className='mt-5 text-2xl text-right'>$110</span>
-            </div>
             <div className='mb-2 mt-5 w-full'>
               <Link
                 className='flex btn-primary justify-center '
