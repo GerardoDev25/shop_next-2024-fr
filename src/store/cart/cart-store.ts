@@ -13,12 +13,14 @@ export const useCartStore = create<State>()((set, get) => ({
   addProductToCart: (product: CartProduct) => {
     const { cart } = get();
 
-    const productInCart = cart.some(
+    console.log(cart);
+
+    const isProductInCart = cart.some(
       (item) => item.id === product.id && item.size === product.size
     );
 
     // ? if product not exist
-    if (!product) {
+    if (!isProductInCart) {
       set({ cart: [...cart, product] });
       return;
     }
@@ -30,7 +32,7 @@ export const useCartStore = create<State>()((set, get) => ({
       }
       return item;
     });
-    
+
     set({ cart: updatedCart });
   },
 }));

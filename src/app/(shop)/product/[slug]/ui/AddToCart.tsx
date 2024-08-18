@@ -2,7 +2,12 @@
 
 import { SizeSelector, QuantitySelector } from '@/components/product';
 import { useState } from 'react';
-import { Product, Size } from '@/interfaces/product.interface';
+import type {
+  CartProduct,
+  Product,
+  Size,
+} from '@/interfaces/product.interface';
+import { useCartStore } from '@/store/cart';
 
 interface Props {
   product: Product;
@@ -13,11 +18,27 @@ export const AddToCart = ({ product }: Props) => {
   const [quantity, setQuantity] = useState(1);
   const [posted, setPosted] = useState(false);
 
+  const addProductToCart = useCartStore((s) => s.addProductToCart);
+
   const addToCart = () => {
     setPosted(true);
     if (!size) return;
-    console.log({ size, quantity });
-    
+
+    const cartProduct: CartProduct = {
+      id: product.id,
+      quantity,
+      size,
+      slug: product.slug,
+      title: product.title,
+      price: product.price,
+      image: product.images[0],
+    };
+    addProductToCart(cartProduct);
+
+    // * reset values
+    setSize(undefined);
+    setQuantity(1);
+    setPosted(false);
   };
 
   return (
