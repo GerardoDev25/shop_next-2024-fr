@@ -1,13 +1,15 @@
 'use client';
 
-import { useFormState } from 'react-dom';
+import { useFormState, useFormStatus } from 'react-dom';
 import Link from 'next/link';
 import { authenticate } from '@/actions/auth';
+import { IoInformation, IoInformationOutline } from 'react-icons/io5';
+import clsx from 'clsx';
 
 export const LoginForm = () => {
   const [state, dispatch] = useFormState(authenticate, undefined);
 
-  console.log({state});
+  console.log({ state });
 
   return (
     <form action={dispatch} className='flex flex-col'>
@@ -25,7 +27,15 @@ export const LoginForm = () => {
         name='password'
       />
 
-      <button type='submit' className='btn-primary'>Enter</button>
+      {(state === 'Invalid credentials.' ||
+        state === 'Something went wrong.') && (
+        <div className='flex flex-row mb-2 justify-center'>
+          <IoInformationOutline className='h-5 w-5 text-red-500' />
+          <p className='text-sm text-red-500'>{state}</p>
+        </div>
+      )}
+
+      <LoginButton />
 
       {/* divisor l ine */}
       <div className='flex items-center my-5'>
@@ -38,5 +48,19 @@ export const LoginForm = () => {
         Create new account
       </Link>
     </form>
+  );
+};
+
+const LoginButton = () => {
+  const { pending } = useFormStatus();
+
+  return (
+    <button
+      type='submit'
+      className={clsx({ 'btn-primary': !pending, 'btn-disable': pending })}
+      disabled={pending}
+    >
+      Log In
+    </button>
   );
 };
