@@ -1,9 +1,8 @@
 'use client';
 
-import { logout } from '@/actions/auth';
-import { useIuStore } from '@/store/ui';
-import clsx from 'clsx';
 import Link from 'next/link';
+import { useSession } from 'next-auth/react';
+import clsx from 'clsx';
 import {
   IoCloseOutline,
   IoLogInOutline,
@@ -15,9 +14,16 @@ import {
   IoTicketOutline,
 } from 'react-icons/io5';
 
+import { logout } from '@/actions/auth';
+import { useIuStore } from '@/store/ui';
+
 export const Sidebar = () => {
   const isSideMenuOpen = useIuStore((s) => s.isSideMenuOpen);
   const closeSideMenu = useIuStore((s) => s.closeSideMenu);
+
+  const { data: session, status, update } = useSession();
+
+  // console.log(session);
 
   return (
     <div className=''>
