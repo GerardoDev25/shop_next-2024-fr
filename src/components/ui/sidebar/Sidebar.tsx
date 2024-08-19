@@ -16,14 +16,26 @@ import {
 
 import { logout } from '@/actions/auth';
 import { useIuStore } from '@/store/ui';
+import { useState } from 'react';
 
 export const Sidebar = () => {
   const isSideMenuOpen = useIuStore((s) => s.isSideMenuOpen);
   const closeSideMenu = useIuStore((s) => s.closeSideMenu);
 
-  const { data: session, status, update } = useSession();
+  const { data: session } = useSession();
 
-  // console.log(session);
+  const [isAuthenticated, setIsAuthenticated] = useState(!!session?.user);
+
+  const onLogIn = () => {
+    setIsAuthenticated(true);
+    closeSideMenu();
+  };
+
+  const onLogOut = () => {
+    setIsAuthenticated(false);
+    closeSideMenu();
+    logout();
+  };
 
   return (
     <div className=''>
@@ -84,25 +96,24 @@ export const Sidebar = () => {
           <span className='ml-3 text-xl'>Orders</span>
         </Link>
 
-        <Link
-          href={'/auth/login'}
-          className='flex items-center mt-10 p-2 hover:bg-gray-100 transition-all rounded'
-          onClick={closeSideMenu}
-        >
-          <IoLogInOutline size={30} />
-          <span className='ml-3 text-xl'>Log In</span>
-        </Link>
-
-        <button
-          className='flex w-full items-center mt-10 p-2 hover:bg-gray-100 transition-all rounded'
-          onClick={() => {
-            logout();
-            closeSideMenu();
-          }}
-        >
-          <IoLogOutOutline size={30} />
-          <span className='ml-3 text-xl'>Log Out</span>
-        </button>
+        {!isAuthenticated ? (
+          <Link
+            href={'/auth/login'}
+            className='flex items-center mt-10 p-2 hover:bg-gray-100 transition-all rounded'
+            onClick={onLogIn}
+          >
+            <IoLogInOutline size={30} />
+            <span className='ml-3 text-xl'>Log In</span>
+          </Link>
+        ) : (
+          <button
+            className='flex w-full items-center mt-10 p-2 hover:bg-gray-100 transition-all rounded'
+            onClick={onLogOut}
+          >
+            <IoLogOutOutline size={30} />
+            <span className='ml-3 text-xl'>Log Out</span>
+          </button>
+        )}
         <div className='w-full h-px bg-gray-200 my-10' />
 
         <Link
