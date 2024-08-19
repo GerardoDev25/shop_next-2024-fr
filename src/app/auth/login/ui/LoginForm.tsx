@@ -5,10 +5,19 @@ import Link from 'next/link';
 import { authenticate } from '@/actions/auth';
 import { IoInformation, IoInformationOutline } from 'react-icons/io5';
 import clsx from 'clsx';
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
 export const LoginForm = () => {
   const [state, dispatch] = useFormState(authenticate, undefined);
+  const router = useRouter();
 
+  useEffect(() => {
+    if (state === 'success') {
+      router.replace('/');
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state]);
 
   return (
     <form action={dispatch} className='flex flex-col'>
@@ -26,8 +35,7 @@ export const LoginForm = () => {
         name='password'
       />
 
-      {(state === 'Invalid credentials.' ||
-        state === 'Something went wrong.') && (
+      {state !== undefined && state !== 'success' && (
         <div className='flex flex-row mb-2 justify-center'>
           <IoInformationOutline className='h-5 w-5 text-red-500' />
           <p className='text-sm text-red-500'>{state}</p>

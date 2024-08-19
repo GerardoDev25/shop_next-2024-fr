@@ -31,6 +31,7 @@ export const authConfig: NextAuthConfig = {
         }
 
         const { password: _, ...rest } = user;
+        console.log({rest});
         return rest;
       },
     }),
