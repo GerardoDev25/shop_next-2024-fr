@@ -5,13 +5,17 @@ import Link from 'next/link';
 import { authenticate } from '@/actions/auth';
 import { IoInformationOutline } from 'react-icons/io5';
 import clsx from 'clsx';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 // import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/store/auth';
 
 export const LoginForm = () => {
   const [state, dispatch] = useFormState(authenticate, undefined);
   // const router = useRouter();
+  const [loaded, setLoaded] = useState(false);
+  useEffect(() => {
+    setLoaded(true);
+  }, []);
 
   const singInClient = useAuthStore((s) => s.singInClient);
 
@@ -24,6 +28,9 @@ export const LoginForm = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state]);
 
+  if (!loaded) {
+    return <></>;
+  }
   return (
     <form action={dispatch} className='flex flex-col'>
       <label htmlFor='email'>Email</label>
@@ -49,7 +56,6 @@ export const LoginForm = () => {
 
       <LoginButton />
 
-      {/* divisor l ine */}
       <div className='flex items-center my-5'>
         <div className='flex-1 border-t border-gray-500'></div>
         <div className='px-2 text-gray-800'>O</div>

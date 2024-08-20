@@ -30,6 +30,7 @@ export const Sidebar = () => {
   const signOutClient = useAuthStore((s) => s.signOutClient);
 
   const isAdmin = session?.user.role === 'admin';
+  // const isAuthenticated = !!session?.user;
 
   const onLogIn = () => {
     singInClient();
@@ -40,6 +41,7 @@ export const Sidebar = () => {
     signOutClient();
     closeSideMenu();
     logout();
+    // window.location.reload();
   };
 
   return (
