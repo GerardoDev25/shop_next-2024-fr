@@ -5,6 +5,8 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
+import { registerUser } from '@/actions/auth';
+
 type FormInputs = {
   name: string;
   email: string;
@@ -12,6 +14,8 @@ type FormInputs = {
 };
 
 export const RegisterForm = () => {
+  const [errorMessage, setErrorMessage] = useState('');
+
   const {
     register,
     handleSubmit,
@@ -25,7 +29,14 @@ export const RegisterForm = () => {
 
   const onSubmit: SubmitHandler<FormInputs> = async (data) => {
     const { email, name, password } = data;
-    console.log(data);
+    const resp = await registerUser(name, email, password);
+
+    if (!resp.ok) {
+      setErrorMessage(resp.message);
+      return;
+    }
+
+    console.log(resp);
   };
 
   if (!loaded) {
@@ -65,6 +76,8 @@ export const RegisterForm = () => {
         type='password'
         {...register('password', { required: true, minLength: 4 })}
       />
+
+      <span className='text-red-500'>{errorMessage}</span>
 
       <button className='btn-primary'>Create new account</button>
 
