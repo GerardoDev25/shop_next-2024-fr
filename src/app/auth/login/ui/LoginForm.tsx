@@ -6,15 +6,20 @@ import { authenticate } from '@/actions/auth';
 import { IoInformationOutline } from 'react-icons/io5';
 import clsx from 'clsx';
 import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+// import { useRouter } from 'next/navigation';
+import { useAuthStore } from '@/store/auth';
 
 export const LoginForm = () => {
   const [state, dispatch] = useFormState(authenticate, undefined);
-  const router = useRouter();
+  // const router = useRouter();
+
+  const singInClient = useAuthStore((s) => s.singInClient);
 
   useEffect(() => {
     if (state === 'success') {
-      router.replace('/');
+      singInClient();
+      // router.replace('/');
+      window.location.replace('/');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state]);
