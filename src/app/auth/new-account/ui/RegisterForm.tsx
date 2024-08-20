@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-import { registerUser } from '@/actions/auth';
+import { login, registerUser } from '@/actions/auth';
 
 type FormInputs = {
   name: string;
@@ -35,6 +35,9 @@ export const RegisterForm = () => {
       setErrorMessage(resp.message);
       return;
     }
+
+    await login(email.toLowerCase(), password);
+    window.location.replace('/');
 
     console.log(resp);
   };
