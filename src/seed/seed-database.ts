@@ -1,9 +1,10 @@
-import { initialData } from './seed';
 import prisma from '../lib/prisma';
+import { initialData } from './seed';
+import { countries } from './seed-countries';
 
 async function main() {
   // * delete all data from the database
-
+  await prisma.country.deleteMany();
   await prisma.user.deleteMany();
   await prisma.productImage.deleteMany();
   await prisma.product.deleteMany();
@@ -11,9 +12,12 @@ async function main() {
 
   const { categories, products, users } = initialData;
 
+  // * insert countries
+  await prisma.country.createMany({ data: countries });
+
   // * insert users
   await prisma.user.createMany({ data: users });
-  
+
   // * insert categories
   await prisma.category.createMany({
     data: categories.map((category) => ({ name: category })),
