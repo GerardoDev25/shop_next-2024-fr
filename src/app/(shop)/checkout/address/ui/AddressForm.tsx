@@ -44,10 +44,10 @@ export const AddressForm = ({ countries }: Props) => {
 
   useEffect(() => {
     if (address.firstName) {
+      console.log('hello');
       reset(address);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [address, reset]);
 
   return (
     <form
