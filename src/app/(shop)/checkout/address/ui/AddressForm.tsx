@@ -32,8 +32,8 @@ export const AddressForm = ({ countries, userStoreAddress = {} }: Props) => {
   const setAddress = useAddressStore((s) => s.setAddress);
   const address = useAddressStore((s) => s.address);
 
-  const router = useRouter()
-  
+  const router = useRouter();
+
   const {
     handleSubmit,
     register,
@@ -53,17 +53,15 @@ export const AddressForm = ({ countries, userStoreAddress = {} }: Props) => {
   }, [address, reset]);
 
   const onSubmit = async (data: FormInputs) => {
-    setAddress(data);
-
     const { rememberAddress, ...restAddress } = data;
+    setAddress(restAddress);
 
     // todo handle the exception
     rememberAddress
       ? await setUserAddress(restAddress, session!.user.id)
       : await deleteUserAddress(session!.user.id);
 
-      router.push('/checkout')
-      
+    router.push('/checkout');
   };
 
   return (
