@@ -8,6 +8,7 @@ import { useSession } from 'next-auth/react';
 import { Address, Country } from '@/interfaces';
 import { deleteUserAddress, setUserAddress } from '@/actions/address';
 import { useAddressStore } from '@/store/address/';
+import { useRouter } from 'next/navigation';
 
 interface FormInputs {
   firstName: string;
@@ -31,6 +32,8 @@ export const AddressForm = ({ countries, userStoreAddress = {} }: Props) => {
   const setAddress = useAddressStore((s) => s.setAddress);
   const address = useAddressStore((s) => s.address);
 
+  const router = useRouter()
+  
   const {
     handleSubmit,
     register,
@@ -49,14 +52,18 @@ export const AddressForm = ({ countries, userStoreAddress = {} }: Props) => {
     }
   }, [address, reset]);
 
-  const onSubmit = (data: FormInputs) => {
+  const onSubmit = async (data: FormInputs) => {
     setAddress(data);
 
     const { rememberAddress, ...restAddress } = data;
 
+    // todo handle the exception
     rememberAddress
-      ? setUserAddress(restAddress, session!.user.id)
-      : deleteUserAddress(session!.user.id);
+      ? await setUserAddress(restAddress, session!.user.id)
+      : await deleteUserAddress(session!.user.id);
+
+      router.push('/checkout')
+      
   };
 
   return (
