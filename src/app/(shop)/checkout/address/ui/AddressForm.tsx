@@ -1,13 +1,13 @@
 'use client';
 
-import { useForm } from 'react-hook-form';
-import clsx from 'clsx';
-
-import { Country } from '@/interfaces';
-import { useAddressStore } from '@/store/address/';
 import { useEffect } from 'react';
-import { deleteUserAddress, setUserAddress } from '@/actions/address';
+import clsx from 'clsx';
+import { useForm } from 'react-hook-form';
 import { useSession } from 'next-auth/react';
+
+import { Address, Country } from '@/interfaces';
+import { deleteUserAddress, setUserAddress } from '@/actions/address';
+import { useAddressStore } from '@/store/address/';
 
 interface FormInputs {
   firstName: string;
@@ -23,9 +23,10 @@ interface FormInputs {
 
 interface Props {
   countries: Country[];
+  userStoreAddress?: Partial<Address>;
 }
 
-export const AddressForm = ({ countries }: Props) => {
+export const AddressForm = ({ countries, userStoreAddress = {} }: Props) => {
   const { data: session } = useSession({ required: true });
   const setAddress = useAddressStore((s) => s.setAddress);
   const address = useAddressStore((s) => s.address);
@@ -37,7 +38,8 @@ export const AddressForm = ({ countries }: Props) => {
     formState: { isValid },
   } = useForm<FormInputs>({
     defaultValues: {
-      // todo
+      ...(userStoreAddress as any),
+      rememberAddress: false,
     },
   });
 
@@ -128,7 +130,6 @@ export const AddressForm = ({ countries }: Props) => {
               {country.name}
             </option>
           ))}
-
         </select>
       </div>
 
