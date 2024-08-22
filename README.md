@@ -19,9 +19,11 @@ make sure you have these programs installed in your machine
 4. install dependencies ```yarn install```
 5. run database ```docker compose up -d```
 6. run db migrations ```yarn prisma migrate dev```
-7. execute seed ```yarn seed```
-8. run de project ```yarn dev```
-9. go to link __http://localhost:3000__
+7. run db migrations ```yarn prisma generate```
+8. execute seed ```yarn seed```
+9. run de project ```yarn dev```
+10. clean local storage in the browser
+11. go to link __http://localhost:3000__
 
 
 ## run the project (production)
