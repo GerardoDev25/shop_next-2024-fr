@@ -5,7 +5,7 @@ import { prisma } from '@/lib';
 
 export const setUserAddress = async (address: Address, userId: string) => {
   try {
-    console.log({ userId });
+    // console.log({ userId });
 
     const newAddress = await createORReplaceAddress(address, userId);
 
