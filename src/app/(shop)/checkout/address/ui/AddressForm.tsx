@@ -6,6 +6,8 @@ import clsx from 'clsx';
 import { Country } from '@/interfaces';
 import { useAddressStore } from '@/store/address/';
 import { useEffect } from 'react';
+import { setUserAddress } from '@/actions/address';
+import { useSession } from 'next-auth/react';
 
 interface FormInputs {
   firstName: string;
@@ -24,6 +26,7 @@ interface Props {
 }
 
 export const AddressForm = ({ countries }: Props) => {
+  const { data: session } = useSession({ required: true });
   const setAddress = useAddressStore((s) => s.setAddress);
   const address = useAddressStore((s) => s.address);
 
@@ -38,16 +41,22 @@ export const AddressForm = ({ countries }: Props) => {
     },
   });
 
-  const onSubmit = (data: FormInputs) => {
-    setAddress(data);
-  };
-
   useEffect(() => {
     if (address.firstName) {
-      console.log('hello');
       reset(address);
     }
   }, [address, reset]);
+
+  const onSubmit = (data: FormInputs) => {
+    setAddress(data);
+
+    const { rememberAddress, ...restAddress } = data;
+
+    if (rememberAddress) {
+      setUserAddress(restAddress, session!.user.id);
+    } else {
+    }
+  };
 
   return (
     <form
