@@ -6,7 +6,7 @@ import clsx from 'clsx';
 import { Country } from '@/interfaces';
 import { useAddressStore } from '@/store/address/';
 import { useEffect } from 'react';
-import { setUserAddress } from '@/actions/address';
+import { deleteUserAddress, setUserAddress } from '@/actions/address';
 import { useSession } from 'next-auth/react';
 
 interface FormInputs {
@@ -52,10 +52,9 @@ export const AddressForm = ({ countries }: Props) => {
 
     const { rememberAddress, ...restAddress } = data;
 
-    if (rememberAddress) {
-      setUserAddress(restAddress, session!.user.id);
-    } else {
-    }
+    rememberAddress
+      ? setUserAddress(restAddress, session!.user.id)
+      : deleteUserAddress(session!.user.id);
   };
 
   return (
@@ -130,7 +129,6 @@ export const AddressForm = ({ countries }: Props) => {
             </option>
           ))}
 
-          {/* <option value='CRI'>Costa Rica</option> */}
         </select>
       </div>
 
