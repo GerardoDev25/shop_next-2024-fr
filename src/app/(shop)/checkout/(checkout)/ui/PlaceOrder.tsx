@@ -5,6 +5,7 @@ import { useAddressStore } from '@/store/address';
 import { useCartStore } from '@/store/cart';
 import { currencyFormat } from '@/utils';
 import clsx from 'clsx';
+import { placeOrder } from '@/actions/order';
 
 export const PlaceOrder = () => {
   const [loaded, setLoaded] = useState(false);
@@ -28,7 +29,8 @@ export const PlaceOrder = () => {
       size: product.size,
     }));
 
-    console.log({ address, productsToOrder });
+    const resp = await placeOrder(productsToOrder, address);
+    console.log(resp);
 
     // todo
 

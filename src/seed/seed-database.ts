@@ -4,6 +4,10 @@ import { countries } from './seed-countries';
 
 async function main() {
   // * delete all data from the database
+  await prisma.orderAddress.deleteMany();
+  await prisma.orderItems.deleteMany();
+  await prisma.order.deleteMany();
+
   await prisma.country.deleteMany();
   await prisma.user.deleteMany();
   await prisma.productImage.deleteMany();
