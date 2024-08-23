@@ -55,8 +55,9 @@ export const placeOrder = async (
 
   const prismaTx = await prisma.$transaction(async (tx) => {
     // * 1 update product stock
+    
+    
     // * 2 create order and detail
-
     const order = await tx.order.create({
       data: {
         userId,
@@ -82,9 +83,18 @@ export const placeOrder = async (
     });
 
     // * 3 create order address
+    const { country, ...restAddress } = address;
+    const orderAddress = await tx.orderAddress.create({
+      data: {
+        ...restAddress,
+        orderId: order.id,
+        countryId: country,
+      },
+    });
 
     return {
       order,
+      orderAddress,
     };
   });
 

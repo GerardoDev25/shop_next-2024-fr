@@ -147,8 +147,8 @@ model OrderAddress {
   phone      String
 
   // relations
-  country   Country @relation(fields: [constryId], references: [id])
-  constryId String
+  country   Country @relation(fields: [countryId], references: [id])
+  countryId String
 
   order   Order  @relation(fields: [orderId], references: [id])
   orderId String @unique
