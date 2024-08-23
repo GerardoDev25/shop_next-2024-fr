@@ -46,12 +46,12 @@ model Product {
   tags        String[] @default([])
   gender      Gender
 
-  // category relation
+  // relations
   category   Category @relation(fields: [categoryId], references: [id])
   categoryId String
 
-  // image relation
   ProductImage ProductImage[]
+  OrderItems   OrderItems[]
 
   @@index([gender])
 }
@@ -72,12 +72,14 @@ model User {
   role          Role         @default(user)
   image         String?
   address       UserAddress?
+  Order         Order[]
 }
 
 model Country {
-  id          String        @id
-  name        String
-  UserAddress UserAddress[]
+  id           String         @id
+  name         String
+  UserAddress  UserAddress[]
+  OrderAddress OrderAddress[]
 }
 
 model UserAddress {
@@ -97,4 +99,57 @@ model UserAddress {
 
   user   User   @relation(fields: [userId], references: [id])
   userId String @unique
+}
+
+// * shopping order
+
+model Order {
+  id           String    @id @default(uuid())
+  subTotal     Float
+  tax          Float
+  total        Float
+  itemsInOrder Int
+  isPaid       Boolean
+  payAt        DateTime?
+  createAt     DateTime  @default(now())
+  UpdateAt     DateTime  @updatedAt
+
+  // relations
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+
+  OrderItems   OrderItems[]
+  OrderAddress OrderAddress?
+}
+
+model OrderItems {
+  id       String @id @default(uuid())
+  quantity Int
+  price    Float
+  size     Size
+
+  // relations
+  order   Order  @relation(fields: [orderId], references: [id])
+  orderId String
+
+  product   Product @relation(fields: [productId], references: [id])
+  productId String
+}
+
+model OrderAddress {
+  id         String  @id @default(uuid())
+  firstName  String
+  lastName   String
+  address    String
+  address2   String?
+  postalCode String
+  city       String
+  phone      String
+
+  // relations
+  country   Country @relation(fields: [constryId], references: [id])
+  constryId String
+
+  order   Order  @relation(fields: [orderId], references: [id])
+  orderId String @unique
 }
