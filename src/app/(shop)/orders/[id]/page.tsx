@@ -22,8 +22,6 @@ export default async function OrderPage({ params }: Props) {
   const address = order!.OrderAddress;
   const products = order!.OrderItems;
 
-  console.log(JSON.stringify(order, null, 2));
-
   return (
     <div className='flex justify-center items-center mb-72 px-10 sm:px-0'>
       <div className='flex flex-col w-[1000px]'>
