@@ -1,10 +1,24 @@
+export const revalidate = 0;
 // https://tailwindcomponents.com/component/hoverable-table
+import { getOrdersByUser } from '@/actions/order';
 import { Title } from '@/components/ui';
+import clsx from 'clsx';
 
 import Link from 'next/link';
+import { redirect } from 'next/navigation';
 import { IoCardOutline } from 'react-icons/io5';
 
-export default function OrdersPage() {
+export default async function OrdersPage() {
+  const { ok, orders = [] } = await getOrdersByUser();
+
+  if (!ok) {
+    redirect('/auth/login');
+  }
+
+  if (orders.length === 0) {
+    return <p>no orders</p>;
+  }
+
   return (
     <>
       <Title title='Orders' />
@@ -40,41 +54,40 @@ export default function OrdersPage() {
             </tr>
           </thead>
           <tbody>
-            <tr className='bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100'>
-              <td className='px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900'>
-                1
-              </td>
-              <td className='text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap'>
-                Mark
-              </td>
-              <td className='flex items-center text-sm  text-gray-900 font-light px-6 py-4 whitespace-nowrap'>
-                <IoCardOutline className='text-green-800' />
-                <span className='mx-2 text-green-800'>Paid</span>
-              </td>
-              <td className='text-sm text-gray-900 font-light px-6 '>
-                <Link href='/orders/123' className='hover:underline'>
-                  See order
-                </Link>
-              </td>
-            </tr>
-
-            <tr className='bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100'>
-              <td className='px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900'>
-                1
-              </td>
-              <td className='text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap'>
-                Mark
-              </td>
-              <td className='flex items-center text-sm  text-gray-900 font-light px-6 py-4 whitespace-nowrap'>
-                <IoCardOutline className='text-red-800' />
-                <span className='mx-2 text-red-800'>No Paid</span>
-              </td>
-              <td className='text-sm text-gray-900 font-light px-6 '>
-                <Link href='/orders/123' className='hover:underline'>
-                  See order
-                </Link>
-              </td>
-            </tr>
+            {orders.map((item) => (
+              <tr
+                key={item.id}
+                className='bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100'
+              >
+                <td className='px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900'>
+                  {item.id.split('-').at(-1)}
+                </td>
+                <td className='text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap'>
+                  {item.OrderAddress?.firstName} {item.OrderAddress?.lastName}
+                </td>
+                <td className='flex items-center text-sm  text-gray-900 font-light px-6 py-4 whitespace-nowrap'>
+                  <IoCardOutline
+                    className={clsx({
+                      'text-green-800': item.isPaid,
+                      'text-red-800': !item.isPaid,
+                    })}
+                  />
+                  <span
+                    className={clsx('mx-2 ', {
+                      'text-green-800': item.isPaid,
+                      'text-red-800': !item.isPaid,
+                    })}
+                  >
+                    {item.isPaid ? 'Paid' : 'No Paid'}
+                  </span>
+                </td>
+                <td className='text-sm text-gray-900 font-light px-6 '>
+                  <Link href={`/orders/${item.id}`} className='hover:underline'>
+                    See order
+                  </Link>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
