@@ -62,7 +62,7 @@ export default function OrderPage({ params }: Props) {
                   <p>{product.title}</p>
                   <p>${product.price} X 3</p>
                   <p className='font-bold'>SubTotal ${product.price * 3}</p>
-                  <button className='underline mt-3'>Remove</button>
+                  {/* <button className='underline mt-3'>Remove</button> */}
                 </div>
               </div>
             ))}

@@ -5,14 +5,24 @@ import Image from 'next/image';
 
 import { useCartStore } from '@/store/cart';
 import { currencyFormat } from '@/utils';
+import { useRouter } from 'next/navigation';
 
 export const ProductInCart = () => {
   const [loaded, setLoaded] = useState(false);
   const productsInCart = useCartStore((s) => s.cart);
 
+  const router = useRouter();
+  const cart = useCartStore((s) => s.cart);
+
   useEffect(() => {
     setLoaded(true);
   }, []);
+
+  useEffect(() => {
+    if (cart.length === 0) {
+      router.replace('/');
+    }
+  }, [cart, router]);
 
   if (!loaded) {
     return <p>Loading</p>;

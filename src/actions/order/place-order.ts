@@ -126,7 +126,7 @@ export const placeOrder = async (
       ok: true,
       message: 'Order placed successfully',
       order: prismaTx.order,
-      prismaTx
+      prismaTx,
     };
   } catch (error: any) {
     return {
@@ -134,5 +134,4 @@ export const placeOrder = async (
       message: error?.message,
     };
   }
-
 };
