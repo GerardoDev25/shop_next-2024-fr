@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { PayPalButtons, usePayPalScriptReducer } from '@paypal/react-paypal-js';
+import { setTransactionId } from '../../actions/payment/set-transaction-id';
 import {
   CreateOrderData,
   CreateOrderActions,
@@ -41,11 +42,13 @@ export const PaypalButton = ({ amount, orderId }: Props) => {
           },
         },
       ],
-      intent: 'AUTHORIZE'
+      intent: 'CAPTURE',
     });
 
-    console.log({ transactionId });
-
+    const { ok, message } = await setTransactionId(orderId, transactionId);
+    if (!ok) {
+      throw new Error(message);
+    }
     return transactionId;
   };
 
