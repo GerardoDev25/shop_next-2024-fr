@@ -5,6 +5,7 @@ import { countries } from './seed-countries';
 async function main() {
   // * delete all data from the database
   await prisma.orderAddress.deleteMany();
+  await prisma.userAddress.deleteMany();
   await prisma.orderItems.deleteMany();
   await prisma.order.deleteMany();
 
