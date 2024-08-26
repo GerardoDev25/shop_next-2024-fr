@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 
 import './globals.css';
 import { inter } from '@/config/fonts';
-import { AuthProvider } from '@/components/provider';
+import { AuthProvider, PaypalProvider } from '@/components/providers';
 
 export const metadata: Metadata = {
   title: {
@@ -20,7 +20,9 @@ export default function RootLayout({
   return (
     <html lang='en'>
       <body className={inter.className}>
-        <AuthProvider>{children}</AuthProvider>
+        <PaypalProvider>
+          <AuthProvider>{children}</AuthProvider>
+        </PaypalProvider>
       </body>
     </html>
   );

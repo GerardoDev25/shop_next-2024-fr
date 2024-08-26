@@ -6,6 +6,7 @@ import { IoCartOutline } from 'react-icons/io5';
 import { getOrderById } from '@/actions/order';
 import { currencyFormat } from '@/utils';
 import { Title } from '@/components/ui';
+import { PaypalButton } from '../../../../components/paypla/PaypalButton';
 
 interface Props {
   params: { id: string };
@@ -120,7 +121,7 @@ export default async function OrderPage({ params }: Props) {
               </span>
             </div>
             <div className='mb-2 mt-5 w-full'>
-              <div
+              {/* <div
                 className={clsx(
                   'flex items-center rounded-lg py-2 px-3.5 text-xs font-bold text-white mb-5',
                   {
@@ -130,11 +131,12 @@ export default async function OrderPage({ params }: Props) {
                 )}
               >
                 <IoCartOutline size={30} />
-                {/* <span className='mx-2'>Payment Pending</span> */}
                 <span className='mx-2'>
                   {order?.isPaid ? 'Order Paid' : 'Payment Pending'}
                 </span>
-              </div>
+              </div> */}
+
+              <PaypalButton />
             </div>
           </div>
         </div>
