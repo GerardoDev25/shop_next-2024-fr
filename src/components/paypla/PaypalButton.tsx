@@ -9,6 +9,7 @@ import {
   OnApproveActions,
   OnApproveData,
 } from '@paypal/paypal-js';
+import { paypalCheckPayment } from '@/actions/payment';
 
 interface Props {
   orderId: string;
@@ -52,17 +53,15 @@ export const PaypalButton = ({ amount, orderId }: Props) => {
     return transactionId;
   };
 
-  const onApprove = (
-    data: OnApproveData,
-    actions: OnApproveActions
-  ): Promise<void> => {
-    return Promise.resolve();
+  const onApprove = async (data: OnApproveData, actions: OnApproveActions) => {
+    console.log('onApprove');
+    const details = await actions.order?.capture();
+    if (!details) {
+      return;
+    }
+
+    await paypalCheckPayment(details.id!);
   };
 
-  return (
-    <PayPalButtons
-      createOrder={createOrder}
-      // onApprove={onApprove}
-    />
-  );
+  return <PayPalButtons createOrder={createOrder} onApprove={onApprove} />;
 };
