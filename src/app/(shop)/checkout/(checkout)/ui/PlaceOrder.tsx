@@ -9,14 +9,12 @@ import { placeOrder } from '@/actions/order';
 import { useRouter } from 'next/navigation';
 
 export const PlaceOrder = () => {
+  const router = useRouter();
 
-  const router = useRouter()
-  
   const [loaded, setLoaded] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [isPlacingOrder, setIsPlacingOrder] = useState(false);
 
-  
   const address = useAddressStore((s) => s.address);
   const cart = useCartStore((s) => s.cart);
   const clearCart = useCartStore((s) => s.clearCart);
@@ -44,7 +42,7 @@ export const PlaceOrder = () => {
       return;
     }
 
-    clearCart()
+    clearCart();
     setIsPlacingOrder(false);
     router.replace(`/orders/${resp.order?.id}`);
   };
@@ -96,9 +94,9 @@ export const PlaceOrder = () => {
         <button
           className={clsx({
             'btn-primary': !isPlacingOrder,
-            'btn-disable': isPlacingOrder,
+            'btn-disable': isPlacingOrder || cart.length === 0,
           })}
-          disabled={isPlacingOrder}
+          disabled={isPlacingOrder || cart.length === 0}
           // href='/orders/123'
           onClick={onPlaceOrder}
         >
