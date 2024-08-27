@@ -1,6 +1,8 @@
 'use server';
 
 import { PayPalOrderStatusResponse } from '@/interfaces';
+import { prisma } from '@/lib';
+import { ok } from 'assert';
 
 export const paypalCheckPayment = async (paypalTransactionId: string) => {
   const authToken = await getPaypalBearerToken();
@@ -31,6 +33,24 @@ export const paypalCheckPayment = async (paypalTransactionId: string) => {
   }
 
   // todo update db
+  try {
+    await prisma.order.update({
+      where: { id: purchase_units[0].invoice_id },
+      data: { isPaid: true, payAt: new Date() },
+    });
+
+    // todo revalidate path
+    return {
+      ok: true,
+      message: 'Order paid successfully',
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      ok: false,
+      message: '500- Error updating order',
+    };
+  }
 };
 
 const getPaypalBearerToken = async (): Promise<string | null> => {
@@ -57,9 +77,10 @@ const getPaypalBearerToken = async (): Promise<string | null> => {
   };
 
   try {
-    const result = await fetch(oAuth2Url, requestOptions).then((response) =>
-      response.json()
-    );
+    const result = await fetch(oAuth2Url, {
+      ...requestOptions,
+      cache: 'no-store',
+    }).then((response) => response.json());
 
     return result.access_token;
   } catch (error) {
