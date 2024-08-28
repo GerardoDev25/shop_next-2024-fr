@@ -1,5 +1,6 @@
 'use client';
 
+import { changeUserRole } from '@/actions/user';
 import { User } from '@/interfaces';
 
 interface Props {
@@ -7,6 +8,10 @@ interface Props {
 }
 
 export const UserTable = ({ users }: Props) => {
+  const onChangeUserRole = async (role: string) => {
+    changeUserRole;
+  };
+
   return (
     <table className='min-w-full'>
       <thead className='bg-gray-200 border-b'>
@@ -48,7 +53,7 @@ export const UserTable = ({ users }: Props) => {
               <select
                 className='text-sm text-gray-900 w-full p-2'
                 value={user.role}
-                onChange={(e) => console.log(e.target.value)}
+                onChange={(e) => changeUserRole(user.id, e.target.value)}
               >
                 <option value='admin'>Admin</option>
                 <option value='user'>User</option>
