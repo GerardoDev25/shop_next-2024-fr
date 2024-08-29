@@ -1,10 +1,11 @@
 'use client';
 
-import { Product, Category, Gender } from '@/interfaces';
+import { Product, Category, Gender, ProductImage } from '@/interfaces';
+import Image from 'next/image';
 import { useForm } from 'react-hook-form';
 
 interface Props {
-  product: Product;
+  product: Product & { ProductImage?: ProductImage[] };
   categories: Category[];
 }
 
@@ -43,7 +44,10 @@ export const ProductForm = ({ product, categories }: Props) => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSendSubmit)} className='grid px-5 mb-16 grid-cols-1 sm:px-0 sm:grid-cols-2 gap-3'>
+    <form
+      onSubmit={handleSubmit(onSendSubmit)}
+      className='grid px-5 mb-16 grid-cols-1 sm:px-0 sm:grid-cols-2 gap-3'
+    >
       {/* Textos */}
       <div className='w-full'>
         <div className='flex flex-col mb-2'>
@@ -120,7 +124,9 @@ export const ProductForm = ({ product, categories }: Props) => {
           </select>
         </div>
 
-        <button className='btn-primary w-full'>Save</button>
+        <button className='btn-primary w-full' type='submit'>
+          Save
+        </button>
       </div>
 
       {/* sizes and images selector*/}
@@ -145,9 +151,28 @@ export const ProductForm = ({ product, categories }: Props) => {
             <input
               type='file'
               multiple
-              className='p-2 border rounded-md bg-gray-200'
+              className='file:bg-gray-200 file:rounded p-2 border rounded-md bg-gray-200'
               accept='image/png, image/jpeg'
             />
+          </div>
+
+          <div className='grid grid-cols-1 sm:grid-cols-3 gap-3'>
+            {product.ProductImage?.map((image) => (
+              <div key={image.id} className='shadow-md rounded-t'>
+                <Image
+                  src={`/products/${image.url}`}
+                  alt={product.title}
+                  width={300}
+                  height={300}
+                />
+                <input
+                  type='button'
+                  className='btn-danger rounded-b-xl w-full'
+                  onClick={() => console.log({ id: image.id, url: image.url })}
+                  value={'Delete'}
+                />
+              </div>
+            ))}
           </div>
         </div>
       </div>

@@ -5,12 +5,10 @@ import { prisma } from '@/lib';
 export const getProductBySlug = async (slug: string) => {
   try {
     const product = await prisma.product.findFirst({
-      include: {
-        ProductImage: {
-          select: { url: true },
-        },
-      },
       where: { slug },
+      include: {
+        ProductImage: { select: { url: true, id: true } },
+      },
     });
 
     if (!product) {
@@ -22,6 +20,7 @@ export const getProductBySlug = async (slug: string) => {
     return {
       ...rest,
       images: product.ProductImage.map((image) => image.url),
+      ProductImage,
     };
   } catch (error) {
     console.log(error);
