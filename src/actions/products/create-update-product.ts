@@ -55,12 +55,21 @@ export const createUpdateProduct = async (formData: FormData) => {
       });
       console.log({ updateProduct: productTx });
     } else {
+      productTx = await tx.product.create({
+        data: {
+          ...rest,
+          sizes: { set: rest.sizes as Size[] },
+          tags: { set: tagArray },
+        },
+      });
+
+      console.log({ newProduct: productTx });
     }
 
-    // return { product: productTx };
+    return { product: productTx };
   });
 
   // todo revalidate path
-  
+
   return { ok: true };
 };

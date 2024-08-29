@@ -7,7 +7,7 @@ import Image from 'next/image';
 import { useForm } from 'react-hook-form';
 
 interface Props {
-  product: Product & { ProductImage?: ProductImage[] };
+  product: Partial<Product> & { ProductImage?: ProductImage[] };
   categories: Category[];
 }
 
@@ -38,7 +38,7 @@ export const ProductForm = ({ product, categories }: Props) => {
   } = useForm<FromInputs>({
     defaultValues: {
       ...product,
-      tags: product.tags.join(', '),
+      tags: product.tags?.join(', '),
       sizes: product.sizes ?? [],
       // todo images
     },
@@ -49,7 +49,10 @@ export const ProductForm = ({ product, categories }: Props) => {
 
     const { ...productToSave } = data;
 
-    formData.append('id', product.id ?? '');
+    if (product.id) {
+      formData.append('id', product.id);
+    }
+
     formData.append('title', productToSave.title);
     formData.append('slug', productToSave.slug);
     formData.append('description', productToSave.description);
@@ -61,7 +64,7 @@ export const ProductForm = ({ product, categories }: Props) => {
     formData.append('gender', productToSave.gender);
 
     const { ok } = await createUpdateProduct(formData);
-    console.log({ok});
+    console.log({ ok });
   };
 
   const onSizeChange = (size: string) => {
@@ -161,6 +164,15 @@ export const ProductForm = ({ product, categories }: Props) => {
 
       {/* sizes and images selector*/}
       <div className='w-full'>
+        <div className='flex flex-col mb-2'>
+          <span>Stock</span>
+          <input
+            type='number'
+            className='p-2 border rounded-md bg-gray-200'
+            {...register('inStock', { required: true, min: 0 })}
+          />
+        </div>
+
         {/* As checkboxes */}
         <div className='flex flex-col'>
           <span>Sizes</span>
@@ -195,7 +207,7 @@ export const ProductForm = ({ product, categories }: Props) => {
               <div key={image.id} className='shadow-md rounded-t'>
                 <Image
                   src={`/products/${image.url}`}
-                  alt={product.title}
+                  alt={product?.title ?? 'Product Image'}
                   width={300}
                   height={300}
                 />
