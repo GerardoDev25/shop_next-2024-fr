@@ -4,8 +4,9 @@ import { redirect } from 'next/navigation';
 import { getOrderById } from '@/actions/order';
 import { currencyFormat } from '@/utils';
 import { Title } from '@/components/ui';
-import { PaypalButton } from '../../../../components/paypla/PaypalButton';
+ import { PaypalButton } from '../../../../components/paypla/PaypalButton';
 import { OrderStatus } from '@/components/order';
+import { ProductImage } from '@/components/product/product-image';
 
 interface Props {
   params: { id: string };
@@ -39,8 +40,8 @@ export default async function OrderPage({ params }: Props) {
                 key={item.product.slug + ' - ' + item.size}
                 className='flex mb-5'
               >
-                <Image
-                  src={`/products/${item.product.ProductImage[0].url}`}
+                <ProductImage
+                  src={item.product.ProductImage[0]?.url}
                   width={100}
                   height={100}
                   alt={item.product.title}
