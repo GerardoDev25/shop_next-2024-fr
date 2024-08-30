@@ -1,6 +1,6 @@
 'use client';
 
-import { createUpdateProduct } from '@/actions/products';
+import { createUpdateProduct, deleteProductImage } from '@/actions/products';
 import { ProductImage as ProductImageComponent } from '@/components/product/product-image';
 import { Product, Category, Gender, ProductImage } from '@/interfaces';
 import clsx from 'clsx';
@@ -233,7 +233,7 @@ export const ProductForm = ({ product, categories }: Props) => {
                 <input
                   type='button'
                   className='btn-danger rounded-b-xl w-full'
-                  onClick={() => console.log({ id: image.id, url: image.url })}
+                  onClick={() => deleteProductImage(image.id, image.url)}
                   value={'Delete'}
                 />
               </div>
