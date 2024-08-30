@@ -65,19 +65,22 @@ export const createUpdateProduct = async (formData: FormData) => {
           },
         });
 
-        console.log({ newProduct: productTx });
+        // console.log({ newProduct: productTx });
+      }
+
+      if (formData.getAll('images')) {
+        console.log(formData.getAll('images'));
       }
 
       return { product: productTx };
     });
     // todo revalidate path
-    revalidatePath('/admin/products')
-    revalidatePath(`/admin/product/${prismaTx.product.slug}`)
-    revalidatePath(`/products/${prismaTx.product.slug}`)
+    revalidatePath('/admin/products');
+    revalidatePath(`/admin/product/${prismaTx.product.slug}`);
+    revalidatePath(`/products/${prismaTx.product.slug}`);
     return { ok: true, product: prismaTx.product };
   } catch (error) {
     console.log(error);
     return { ok: false, error: 'Something went wrong' };
   }
-
 };
