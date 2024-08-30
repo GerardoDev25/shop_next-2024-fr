@@ -68,13 +68,22 @@ export const createUpdateProduct = async (formData: FormData) => {
             tags: { set: tagArray },
           },
         });
-
-        // console.log({ newProduct: productTx });
       }
+
+      // * add images to product
 
       if (formData.getAll('images')) {
         const images = await uploadImage(formData.getAll('images') as File[]);
-        console.log(images);
+        if (!images) {
+          throw new Error('Error uploading images');
+        }
+
+        await tx.productImage.createMany({
+          data: images.map((image) => ({
+            url: image!,
+            productId: productTx.id,
+          })),
+        });
       }
 
       return { product: productTx };

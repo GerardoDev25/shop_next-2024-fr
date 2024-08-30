@@ -1,6 +1,7 @@
 'use client';
 
 import { createUpdateProduct } from '@/actions/products';
+import { ProductImage as ProductImageComponent } from '@/components/product/product-image';
 import { Product, Category, Gender, ProductImage } from '@/interfaces';
 import clsx from 'clsx';
 import Image from 'next/image';
@@ -223,8 +224,8 @@ export const ProductForm = ({ product, categories }: Props) => {
           <div className='grid grid-cols-1 sm:grid-cols-3 gap-3'>
             {product.ProductImage?.map((image) => (
               <div key={image.id} className='shadow-md rounded-t'>
-                <Image
-                  src={`/products/${image.url}`}
+                <ProductImageComponent
+                  src={image.url}
                   alt={product?.title ?? 'Product Image'}
                   width={300}
                   height={300}
