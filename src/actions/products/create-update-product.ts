@@ -1,5 +1,9 @@
 'use server';
 
+import { v2 as cloudinary } from 'cloudinary';
+
+cloudinary.config(process.env.CLOUDINARY_URL ?? '');
+
 import { prisma } from '@/lib';
 import { Gender, Product, Size } from '@prisma/client';
 import { revalidatePath } from 'next/cache';
@@ -69,7 +73,8 @@ export const createUpdateProduct = async (formData: FormData) => {
       }
 
       if (formData.getAll('images')) {
-        console.log(formData.getAll('images'));
+        const images = await uploadImage(formData.getAll('images') as File[]);
+        console.log(images);
       }
 
       return { product: productTx };
@@ -82,5 +87,29 @@ export const createUpdateProduct = async (formData: FormData) => {
   } catch (error) {
     console.log(error);
     return { ok: false, error: 'Something went wrong' };
+  }
+};
+
+const uploadImage = async (images: File[]) => {
+  try {
+    const uploadImages = images.map(async (image) => {
+      try {
+        const buffer = await image.arrayBuffer();
+        const base64Image = Buffer.from(buffer).toString('base64');
+
+        return cloudinary.uploader
+          .upload(`data:image/png;base64,${base64Image}`)
+          .then((r) => r.secure_url);
+      } catch (error) {
+        console.log(error);
+        return null;
+      }
+    });
+
+    const uploadedImages = await Promise.all(uploadImages);
+    return uploadedImages;
+  } catch (error) {
+    console.log(error);
+    return null;
   }
 };
